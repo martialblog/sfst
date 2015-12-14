@@ -30,8 +30,7 @@
 
 (setq auto-mode-alist ; files for which sfst-mode will be invoked.
       (append '(("\\.s?fst$" . sfst-mode)
-                ) auto-mode-alist))
-
+       ) auto-mode-alist))
 
 (defvar sfst-mode-syntax-table
   (let ((sfst-mode-syntax-table (make-syntax-table)))
@@ -40,10 +39,10 @@
     ; until end-of-line
     (modify-syntax-entry ?\n ">" sfst-mode-syntax-table)
     (modify-syntax-entry ?\\ "\\" sfst-mode-syntax-table)
-    (modify-syntax-entry ?\" "." sfst-mode-syntax-table)
-;;    (modify-syntax-entry ?\" "." sfst-mode-syntax-table)
+    (modify-syntax-entry ?\ "." sfst-mode-syntax-table)
+    ;;(modify-syntax-entry ?\" "." sfst-mode-syntax-table)
     (modify-syntax-entry ?\' "$" sfst-mode-syntax-table)
-;;    (modify-syntax-entry ?< "\"" sfst-mode-syntax-table)
+    ;;(modify-syntax-entry ?< "\"" sfst-mode-syntax-table)
     (modify-syntax-entry ?< "." sfst-mode-syntax-table)
     (modify-syntax-entry ?> "." sfst-mode-syntax-table)
     (modify-syntax-entry ?{ "(}" sfst-mode-syntax-table)
@@ -55,31 +54,30 @@
     sfst-mode-syntax-table)
   "Syntax table for sfst-mode")
 
-
 (defconst sfst-font-lock-keywords
   (list
    ;; escaped characters
    (list "\\(\\\\->\\)\\|\\(\\\\.\\)"
-         (list 1 'font-lock-function-name-face nil t)
-         (list 2 'font-lock-unfontify-region-function nil t))
+    (list 1 'font-lock-function-name-face nil t)
+    (list 2 'font-lock-unfontify-region-function nil t))
    ;; keywords
-   (list "\\(\\<ALPHABET\\>\\)"
-         (list 1 'font-lock-keyword-face nil t))
+    (list "\\(\\<ALPHABET\\>\\)"
+    (list 1 'font-lock-keyword-face nil t))
    ;; include operator
-   (list "\\(?:\\(#include\\)[ \t]+\\)?\\(\"<?.+?>?\"\\)"
-         (list 1 'font-lock-keyword-face nil t)
-         (list 2 'font-lock-constant-face nil t))
+    (list "\\(?:\\(#include\\)[ \t]+\\)?\\(\"<?.+?>?\"\\)"
+    (list 1 'font-lock-keyword-face nil t)
+    (list 2 'font-lock-constant-face nil t))
    ;; (symbol) variables
-   (list "\\(\\([$#]\\)=?\\(?:\\\\\\$\\|\\\\\\#\\|[^ \n\t]\\)+?\\2\\)"
-         (list 1 'font-lock-variable-name-face nil t))
+    (list "\\(\\([$#]\\)=?\\(?:\\\\\\$\\|\\\\\\#\\|[^ \n\t]\\)+?\\2\\)"
+    (list 1 'font-lock-variable-name-face nil t))
    ;; operators (must of high precedence because of <=> is an op not a multi-character symbols)
-;;    (list "\\(!\\)"
-;;          (list 1 font-lock-negation-char-face nil t))
-   (list "\\([_/\\\\^]->\\|[\\^_]?\\(?:<=>?\\|<?=>\\)\\|[:|&!?*+^_]\\|^_\\|||\\|<<\\|__\\)"
-         (list 1 'font-lock-function-name-face nil t))
+   ;; (list "\\(!\\)"
+   ;; (list 1 font-lock-negation-char-face nil t))
+    (list "\\([_/\\\\^]->\\|[\\^_]?\\(?:<=>?\\|<?=>\\)\\|[:|&!?*+^_]\\|^_\\|||\\|<<\\|__\\)"
+    (list 1 'font-lock-function-name-face nil t))
    ;; multi-character symbols
-   (list "\\(<.*?>\\)"
-         (list 1 'font-lock-type-face nil t))
+    (list "\\(<.*?>\\)"
+    (list 1 'font-lock-type-face nil t))
    )
   "Expressions to highlight in sfst-mode.")
 
@@ -91,21 +89,20 @@
   (make-local-variable 'font-lock-defaults)
   (setq font-lock-defaults '(sfst-font-lock-keywords nil nil)))
 
-
 (defun sfst-mode ()
   "Major mode for editing files describing
-finite state transducers to be used with sfst-tools
-(Stuttgart Finite State Transducer Tools, see
-http://www.ims.uni-stuttgart.de/projekte/gramotron/SOFTWARE/SFST.html)."
+  finite state transducers to be used with sfst-tools
+  (Stuttgart Finite State Transducer Tools, see
+  http://www.ims.uni-stuttgart.de/projekte/gramotron/SOFTWARE/SFST.html)."
   (interactive)
   (kill-all-local-variables)
-;;  (use-local-map sfst-mode-map)
+  ;; (use-local-map sfst-mode-map)
   (setq major-mode 'sfst-mode)
   (setq mode-name "SFST")
   (setq parse-sexp-ignore-comments t)
   (set-syntax-table sfst-mode-syntax-table)
-;;   (make-local-variable 'indent-line-function)
-;;   (setq indent-line-function 'sfst-indent-line)
+  ;; (make-local-variable 'indent-line-function)
+  ;; (setq indent-line-function 'sfst-indent-line)
   (make-local-variable 'comment-start)  
   (setq comment-start "% ")
   (make-local-variable 'comment-end)
@@ -116,7 +113,3 @@ http://www.ims.uni-stuttgart.de/projekte/gramotron/SOFTWARE/SFST.html)."
   (setq completion-ignore-case nil)
   (sfst-font)
   (run-hooks 'sfst-mode-hook))
-
-
-
-
